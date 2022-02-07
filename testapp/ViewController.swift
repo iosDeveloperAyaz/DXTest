@@ -35,14 +35,8 @@ class ViewController: UIViewController {
     }
 
     @IBAction func didTapContacts(_ sender: UIButton) {
-        DispatchQueue.main.async {
-            for button in self.buttons {
-                if button != sender{
-                    button.isSelected = false
-                }
-            }
-        }
-            
+        updateButtons(sender: sender)
+
         if !sender.isSelected {
             sender.isSelected = true
             let image = UIImage(named: "btn-selected-myaccount")
@@ -56,13 +50,7 @@ class ViewController: UIViewController {
         
     }
     @IBAction func didTapNotification(_ sender: UIButton) {
-        DispatchQueue.main.async {
-            for button in self.buttons {
-                if button != sender{
-                    button.isSelected = false
-                }
-            }
-        }
+        updateButtons(sender: sender)
             
         if !sender.isSelected {
             sender.isSelected = true
@@ -79,14 +67,8 @@ class ViewController: UIViewController {
     }
     @IBAction func didTapOrder(_ sender: UIButton) {
         
-        DispatchQueue.main.async {
-            for button in self.buttons {
-                if button != sender{
-                    button.isSelected = false
-                }
-            }
-        }
-        
+        updateButtons(sender: sender)
+
         if !sender.isSelected {
             sender.isSelected = true
             let image = UIImage(named: "btn-selected-orders-list")
@@ -103,6 +85,18 @@ class ViewController: UIViewController {
 
     }
     
+    
+    func updateButtons(sender : UIButton){
+        DispatchQueue.main.async {
+            for button in self.buttons {
+                if button != sender{
+                    button.isSelected = false
+                }
+            }
+        }
+        
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         background.round(with: .bottom, radius: background.frame.width/8)
@@ -111,13 +105,7 @@ class ViewController: UIViewController {
 
     @IBAction func didTapHome(_ sender: UIButton) {
         
-        DispatchQueue.main.async {
-            for button in self.buttons {
-                if button != sender{
-                    button.isSelected = false
-                }
-            }
-        }
+       updateButtons(sender: sender)
        
         
         if !sender.isSelected {
@@ -145,7 +133,7 @@ extension ViewController : UITableViewDelegate, UITableViewDataSource{
         return 4
     }
 
-    internal func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
+     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         let cell  = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as! HomeTableViewCell
         cell.contentView.backgroundColor = .clear
@@ -156,11 +144,14 @@ extension ViewController : UITableViewDelegate, UITableViewDataSource{
         if indexPath.row % 2 == 0 {
             cell.mainView.backgroundColor = .systemTeal
             cell.arrowImage.tintColor = UIColor(red: 7/255, green: 54/255, blue: 94/255, alpha: 1)
+            cell.lblTitle.textColor = cell.arrowImage.tintColor
 
         }else {
             cell.mainView.backgroundColor = cell.lblArrow.backgroundColor
             cell.lblArrow.backgroundColor = .systemTeal
             cell.arrowImage.tintColor = .systemTeal
+            cell.lblTitle.textColor = .systemTeal
+            
         }
         
         
